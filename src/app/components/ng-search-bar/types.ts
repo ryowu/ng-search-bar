@@ -3,11 +3,19 @@ export enum SearchFieldType {
 	string = 'string',
 }
 
-export type SearchField = {
+export interface SearchField {
 	name: string;
 	type: SearchFieldType;
-};
+}
 
-export type SearchConfig = {
-	fields: SearchField[];
-};
+export interface NumberSearchField extends SearchField {
+	min: number;
+}
+
+export interface TextSearchField extends SearchField {
+	isCaseSensitive: boolean;
+}
+
+export interface SearchConfig {
+	fields: (TextSearchField | NumberSearchField)[];
+}

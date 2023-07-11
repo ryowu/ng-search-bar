@@ -1,30 +1,34 @@
 <div class="row">
 
-	<div class="col-auto px-1" *ngFor="let field of config.fields">
-		<div ngbDropdown class="d-inline-block">
-			<button type="button" class="btn btn-outline-primary" id="dropdownForm1" ngbDropdownToggle>
-				{{ field.name }}
-			</button>
-			<div ngbDropdownMenu aria-labelledby="dropdownForm1"
-				class="shadow p-3 mb-5 bg-white rounded border-0 popup-min-width">
-				<div class="row justify-content-center">
-					<div class="col-10" *ngIf="field.type===getTypeName(field)">
-						<input type="text" class="form-control" placeholder="Enter {{ field.name }}"
-							autocomplete="off" />
-						<div class="form-check form-switch mt-2">
-							<input class="form-check-input" type="checkbox" id="caseSensitiveSwitch">
-							<label class="form-check-label" for="caseSensitiveSwitch">Case-Sensitive</label>
+	<div class="col-auto px-1" *ngFor="let field of _config.fields; let i = index">
+
+		<form #textFormGroup [formGroup]="getFormGroupByIndex(i)">
+			<div ngbDropdown class="d-inline-block">
+				<button type="button" [ngClass]="getFilterButtonClass(i)" id="dropdownForm1" ngbDropdownToggle>
+					{{ field.name }}
+				</button>
+				<div ngbDropdownMenu aria-labelledby="dropdownForm1"
+					class="shadow p-3 mb-5 bg-white rounded border-0 popup-min-width">
+					<div class="row justify-content-center">
+						<div class="col-10" *ngIf="field.type===getTypeName(field)">
+							<input type="text" class="form-control" placeholder="Enter {{ field.name }}"
+								autocomplete="off" formControlName="name" />
+							<div class="form-check form-switch mt-2">
+								<input class="form-check-input" type="checkbox" id="caseSensitiveSwitch"
+									formControlName="isCaseSensitive">
+								<label class="form-check-label" for="caseSensitiveSwitch">Case-Sensitive</label>
+							</div>
+						</div>
+					</div>
+					<div class="dropdown-divider"></div>
+					<div class="row justify-content-center">
+						<div class="col-10">
+							<button type="button" class="btn btn-primary col-12">Show Result</button>
 						</div>
 					</div>
 				</div>
-				<div class="dropdown-divider"></div>
-				<div class="row justify-content-center">
-					<div class="col-10">
-						<button type="button" class="btn btn-primary col-12">Show Result</button>
-					</div>
-				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 
 </div>

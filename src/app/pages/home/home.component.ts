@@ -14,8 +14,20 @@ export class HomeComponent implements OnInit {
 	constructor() {}
 
 	public ngOnInit(): void {
-		this.config.fields.push({ name: 'Name', type: SearchFieldType.string });
-		this.config.fields.push({ name: 'Category', type: SearchFieldType.string });
-		this.config.fields.push({ name: 'Location', type: SearchFieldType.string });
+		this.config.fields.push({
+			name: 'Name',
+			type: SearchFieldType.string,
+			isCaseSensitive: false,
+		});
+		this.config.fields.push({
+			name: 'Category',
+			type: SearchFieldType.string,
+			isCaseSensitive: true,
+		});
+		this.config.fields.push({
+			name: 'Location',
+			type: SearchFieldType.string,
+			isCaseSensitive: false,
+		});
 	}
 }
