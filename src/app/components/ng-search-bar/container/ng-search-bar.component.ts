@@ -1,16 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
 	SearchConfig,
 	SearchField,
 	SearchFieldType,
 	TextSearchField,
 } from '../types';
-import {
-	FormArray,
-	FormBuilder,
-	FormControl,
-	FormGroup,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-ng-search-bar',
@@ -18,12 +13,12 @@ import {
 	styleUrls: ['./ng-search-bar.component.scss'],
 })
 export class NgSearchBarComponent implements OnInit {
-	public filterForm: FormGroup;
+	@Output() onFilterChanged: EventEmitter<any> = new EventEmitter<any>();
 	@Input() public set config(value: SearchConfig) {
 		this.applyConfigValue(value);
 		this.filterForm = this.buildFormControls(this._config.fields);
 	}
-
+	public filterForm: FormGroup;
 	public _config: SearchConfig;
 
 	constructor(private readonly fb: FormBuilder) {
@@ -72,6 +67,9 @@ export class NgSearchBarComponent implements OnInit {
 				const formGroupConfig: { [key: string]: FormControl } = {};
 
 				formGroupConfig['name'] = new FormControl(field.name);
+				formGroupConfig['type'] = new FormControl(
+					field.type.toString()
+				);
 				formGroupConfig['currentChipButtonClass'] = new FormControl(
 					field.css?.buttonChip?.default
 				);
@@ -96,7 +94,55 @@ export class NgSearchBarComponent implements OnInit {
 		});
 	}
 
+	private buildFilterObject(): any {
+		const result: any = { and: [] };
+		this.filterFields.controls.forEach((f) => {
+			const currentFormGroup: FormGroup = f as FormGroup;
+			if (currentFormGroup.dirty) {
+				if (currentFormGroup.get('type')?.value === 'string') {
+					const filterProperty: any = {};
+					const propertyName: string =
+						currentFormGroup.get('name')?.value;
+					if (propertyName) {
+						const isCaseSensitive: boolean =
+							currentFormGroup.get('isCaseSensitive')?.value;
+						filterProperty[propertyName] = isCaseSensitive
+							? {
+									includesSensitive:
+										currentFormGroup.get('textValue')
+											?.value,
+							  }
+							: {
+									includes:
+										currentFormGroup.get('textValue')
+											?.value,
+							  };
+
+						result.and.push(filterProperty);
+					}
+				}
+			}
+		});
+		console.log(result);
+
+		return result;
+	}
+
 	public ngOnInit(): void {}
+
+	public getFieldCaption(index: number): string {
+		const currentFormGroup = this.filterFields.controls[index] as FormGroup;
+		const filterField: SearchField = this._config.fields[index];
+		if (!currentFormGroup.dirty) return filterField.name;
+
+		if (filterField.type === SearchFieldType.string) {
+			return `${filterField.name} : ${
+				currentFormGroup.get('textValue')?.value
+			}`;
+		} else {
+			return filterField.name;
+		}
+	}
 
 	public getTypeName(field: SearchField): string {
 		return field.type as string;
@@ -135,6 +181,10 @@ export class NgSearchBarComponent implements OnInit {
 			currentFormGroup
 				.get('currentChipButtonClass')
 				?.patchValue(filterField.css?.buttonChip?.dirty);
+
+			if (this.onFilterChanged) {
+				this.onFilterChanged.emit(this.buildFilterObject());
+			}
 		}
 	}
 }

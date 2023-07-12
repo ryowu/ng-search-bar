@@ -5,7 +5,7 @@
 				<!-- Chips button -->
 				<button type="button" [ngClass]="getFilterButtonClass(i)" [id]="'dropdownForm' + i.toString()"
 					ngbDropdownToggle>
-					{{ field.name }}
+					{{ getFieldCaption(i) }}
 				</button>
 				<!-- Popup area -->
 				<div ngbDropdownMenu (aria-labelledby)="'dropdownForm' + i.toString()"

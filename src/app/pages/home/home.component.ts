@@ -10,24 +10,26 @@ import {
 	styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-	public config: SearchConfig = { fields: [] };
+	public config: SearchConfig = {
+		fields: [
+			{
+				name: 'Name',
+				type: SearchFieldType.string,
+				isCaseSensitive: false,
+			},
+			{
+				name: 'Category',
+				type: SearchFieldType.string,
+				isCaseSensitive: true,
+			},
+			{
+				name: 'Location',
+				type: SearchFieldType.string,
+				isCaseSensitive: false,
+			},
+		],
+	};
 	constructor() {}
 
-	public ngOnInit(): void {
-		this.config.fields.push({
-			name: 'Name',
-			type: SearchFieldType.string,
-			isCaseSensitive: false,
-		});
-		this.config.fields.push({
-			name: 'Category',
-			type: SearchFieldType.string,
-			isCaseSensitive: true,
-		});
-		this.config.fields.push({
-			name: 'Location',
-			type: SearchFieldType.string,
-			isCaseSensitive: false,
-		});
-	}
+	public ngOnInit(): void {}
 }
