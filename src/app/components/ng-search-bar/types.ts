@@ -5,6 +5,7 @@ export enum SearchFieldType {
 
 export interface SearchField {
 	name: string;
+	caption?: string;
 	type: SearchFieldType;
 	css?: {
 		buttonChip?: {
