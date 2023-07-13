@@ -1,7 +1,7 @@
 # ng-search-bar
 Angular component that generates input UI for filtering data with JSON output
 
-# Let's see how to use:
+# Usage:
 Put below html in your target page template
 
 ```html
