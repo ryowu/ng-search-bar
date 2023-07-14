@@ -11,6 +11,7 @@ import {
 })
 export class HomeComponent implements OnInit {
 	public config: SearchConfig = {
+		autoRefresh: true,
 		fields: [
 			{
 				name: 'Name',

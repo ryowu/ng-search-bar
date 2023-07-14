@@ -18,8 +18,6 @@ export class NgSearchBarComponent implements OnInit {
 
 	constructor() {}
 
-	//Caption apply bug when autorefresh is false, click any search button, should check caption
-
 	public get filterUnits(): FilterUnit[] {
 		return this.helper.filterUnits;
 	}

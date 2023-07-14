@@ -4,6 +4,7 @@ import { SearchField, SearchFieldType, TextSearchField } from './types';
 export class FilterUnit {
 	//#region Members
 	private _field: SearchField;
+	private _caption: string;
 	private readonly fb: FormBuilder = new FormBuilder();
 	private _dataForm: FormGroup = this.fb.group({});
 
@@ -14,6 +15,7 @@ export class FilterUnit {
 
 	constructor() {
 		this._field = { name: '', type: SearchFieldType.string };
+		this._caption = '';
 		this.currentChipButtonClass =
 			this._field.css?.buttonChip?.default || 'btn btn-primary';
 	}
@@ -33,13 +35,13 @@ export class FilterUnit {
 	}
 
 	public get fieldCaption(): string {
-		const caption = this._field.caption || 'Field';
-		if (!this.isDirty) return caption;
+		if (this.autoEmitChange) {
+			const caption = this._field.caption || 'Field';
+			if (!this.isDirty) return caption;
 
-		if (this._field.type === SearchFieldType.string) {
-			return `${caption} : ${this._dataForm.get('textValue')?.value}`;
+			return this.getRawCaption();
 		} else {
-			return caption;
+			return this._caption;
 		}
 	}
 
@@ -64,9 +66,20 @@ export class FilterUnit {
 
 	public set filterField(value: SearchField) {
 		this._field = value;
+		this._caption = value.caption || '';
 		this.buildFilterDataForm();
 	}
 	//#endregion
+
+	private getRawCaption(): string {
+		const caption = this._field.caption || 'Field';
+		if (this._field.type === SearchFieldType.string) {
+			const textValue = this._dataForm.get('textValue')?.value;
+			return textValue ? `${caption} : ${textValue}` : caption;
+		} else {
+			return caption;
+		}
+	}
 
 	private buildFilterDataForm() {
 		const formGroupConfig: { [key: string]: FormControl } = {};
@@ -113,11 +126,14 @@ export class FilterUnit {
 		this._dataForm.reset();
 		this.currentChipButtonClass =
 			this._field.css?.buttonChip?.default || 'btn btn-primary';
+		this._caption = this._field.caption || '';
 	}
 
 	public onSearch(): void {
 		this.currentChipButtonClass = this.isDirty
 			? this._field.css?.buttonChip?.dirty || 'btn btn-warning'
 			: this._field.css?.buttonChip?.default || 'btn btn-primary';
+
+		this._caption = this.getRawCaption();
 	}
 }

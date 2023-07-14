@@ -60,13 +60,19 @@ export class SearchBarHelper {
 	}
 
 	public buildFilterObject(): any {
-		const result: any = { and: [] };
+		let result: any = {};
+		const andArray: any[] = [];
 		this.filterUnits.forEach((f) => {
 			const unitResult = f.getFilterResultObject();
 			if (unitResult) {
-				result.and.push(unitResult);
+				andArray.push(unitResult);
 			}
 		});
+		if (andArray.length > 0) {
+			result['and'] = andArray;
+		} else {
+			result = null;
+		}
 		console.log(result);
 
 		return result;
