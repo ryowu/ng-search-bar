@@ -22,13 +22,18 @@ export class NgSearchBarComponent implements OnInit {
 		return this.helper.filterUnits;
 	}
 
-	public ngOnInit(): void {}
+	public ngOnInit(): void {
+		this.helper.$actionSource.subscribe(() => {
+			const filterObject = this.helper.buildFilterObject();
+			console.log('search triggered:', filterObject);
 
-	public onSearch(filterUnit: FilterUnit): void {
-		filterUnit.onSearch();
+			if (this.onFilterChanged) {
+				this.onFilterChanged.emit(filterObject);
+			}
+		});
+	}
 
-		if (this.onFilterChanged) {
-			this.onFilterChanged.emit(this.helper.buildFilterObject());
-		}
+	public onSearchButtonClicked(filterUnit: FilterUnit): void {
+		filterUnit.onSearchButtonClicked();
 	}
 }

@@ -11,7 +11,7 @@ import {
 })
 export class HomeComponent implements OnInit {
 	public config: SearchConfig = {
-		autoRefresh: true,
+		// autoRefresh: true,
 		fields: [
 			{
 				name: 'Name',
@@ -33,4 +33,8 @@ export class HomeComponent implements OnInit {
 	constructor() {}
 
 	public ngOnInit(): void {}
+
+	public onFilterChanged(filterObject: any) {
+		// Use the filterObject in your database query
+	}
 }

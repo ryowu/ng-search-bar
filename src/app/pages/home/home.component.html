@@ -1,5 +1,5 @@
 <div class="row mt-2 mx-2">
     <div class="col-12">
-        <app-ng-search-bar [config]="config"></app-ng-search-bar>
+        <app-ng-search-bar [config]="config" (onFilterChanged)="onFilterChanged($event)"></app-ng-search-bar>
     </div>
 </div>

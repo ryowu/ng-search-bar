@@ -1,8 +1,10 @@
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SearchField, SearchFieldType, TextSearchField } from './types';
+import { Subject, Subscription } from 'rxjs';
 
 export class FilterUnit {
 	//#region Members
+	private sub: Subscription;
 	private _field: SearchField;
 	private _caption: string;
 	private readonly fb: FormBuilder = new FormBuilder();
@@ -11,9 +13,11 @@ export class FilterUnit {
 	private currentChipButtonClass = '';
 
 	public autoEmitChange = false;
+	public $actionSource: Subject<void> = new Subject<void>();
 	//#endregion
 
 	constructor() {
+		this.sub = new Subscription();
 		this._field = { name: '', type: SearchFieldType.string };
 		this._caption = '';
 		this.currentChipButtonClass =
@@ -96,6 +100,26 @@ export class FilterUnit {
 		}
 
 		this._dataForm = this.fb.group(formGroupConfig);
+
+		if (this.sub) {
+			this.sub.unsubscribe();
+		}
+
+		this.sub = this._dataForm.valueChanges.subscribe((data) => {
+			if (this._field.type === SearchFieldType.string) {
+				if (data.textValue && this.autoEmitChange) {
+					this.$actionSource.next();
+				}
+			}
+		});
+	}
+
+	public dispose(): void {
+		if (this.sub) {
+			this.sub.unsubscribe();
+		}
+
+		this.$actionSource.complete();
 	}
 
 	public getFilterResultObject(): any {
@@ -129,11 +153,12 @@ export class FilterUnit {
 		this._caption = this._field.caption || '';
 	}
 
-	public onSearch(): void {
+	public onSearchButtonClicked(): void {
 		this.currentChipButtonClass = this.isDirty
 			? this._field.css?.buttonChip?.dirty || 'btn btn-warning'
 			: this._field.css?.buttonChip?.default || 'btn btn-primary';
 
 		this._caption = this.getRawCaption();
+		this.$actionSource.next();
 	}
 }

@@ -26,5 +26,6 @@ export interface TextSearchField extends SearchField {
 
 export interface SearchConfig {
 	autoRefresh?: boolean;
+	autoRefreshDebounceTime?: number;
 	fields: (TextSearchField | NumberSearchField)[];
 }

@@ -1,11 +1,16 @@
+import { Subject, Subscription, debounceTime, merge } from 'rxjs';
 import { FilterUnit } from './filter-unit';
 import { SearchConfig } from './types';
 
 export class SearchBarHelper {
+	private sub: Subscription;
 	private _config: SearchConfig;
 	private _filterUnits: FilterUnit[] = [];
+	public $actionSource: Subject<void> = new Subject<void>();
+
 	constructor() {
 		this._config = { autoRefresh: false, fields: [] };
+		this.sub = new Subscription();
 	}
 
 	public get config(): SearchConfig {
@@ -57,6 +62,22 @@ export class SearchBarHelper {
 			unit.autoEmitChange = this._config.autoRefresh || false;
 			return unit;
 		});
+
+		let debounceTimeValue = this._config.autoRefreshDebounceTime || 200;
+		if (debounceTimeValue > 5000) {
+			debounceTimeValue = 5000;
+		}
+		const observables = this._filterUnits.map((unit) => unit.$actionSource);
+		this.sub = merge(...observables)
+			.pipe(debounceTime(debounceTimeValue))
+			.subscribe(() => {
+				this.$actionSource.next();
+			});
+	}
+
+	public unsubscribe(): void {
+		this.sub.unsubscribe();
+		this.$actionSource.complete();
 	}
 
 	public buildFilterObject(): any {
@@ -73,8 +94,6 @@ export class SearchBarHelper {
 		} else {
 			result = null;
 		}
-		console.log(result);
-
 		return result;
 	}
 }
