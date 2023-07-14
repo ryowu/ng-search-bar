@@ -49,7 +49,7 @@ export class SearchBarHelper {
 				}
 			}
 			if (!f.caption) {
-				f.caption = f.name;
+				f.caption = f.name.toUpperCase();
 			}
 			return f;
 		});

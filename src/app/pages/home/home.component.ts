@@ -15,18 +15,24 @@ export class HomeComponent implements OnInit {
 		fields: [
 			{
 				name: 'Name',
-				type: SearchFieldType.string,
+				type: SearchFieldType.String,
 				isCaseSensitive: false,
 			},
 			{
 				name: 'Category',
-				type: SearchFieldType.string,
+				type: SearchFieldType.String,
 				isCaseSensitive: true,
 			},
 			{
 				name: 'Location',
-				type: SearchFieldType.string,
+				type: SearchFieldType.String,
 				isCaseSensitive: false,
+			},
+			{
+				name: 'Enabled',
+				type: SearchFieldType.Boolean,
+				caption: 'Enabled',
+				checked: true,
 			},
 		],
 	};

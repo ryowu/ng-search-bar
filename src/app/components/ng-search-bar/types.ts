@@ -1,6 +1,7 @@
 export enum SearchFieldType {
-	number = 'number',
-	string = 'string',
+	Number = 'number',
+	String = 'string',
+	Boolean = 'boolean',
 }
 
 export interface SearchField {
@@ -22,10 +23,15 @@ export interface NumberSearchField extends SearchField {
 export interface TextSearchField extends SearchField {
 	textValue?: string;
 	isCaseSensitive: boolean;
+	maxLength?: number;
+}
+
+export interface BooleanSearchField extends SearchField {
+	checked: boolean;
 }
 
 export interface SearchConfig {
 	autoRefresh?: boolean;
 	autoRefreshDebounceTime?: number;
-	fields: (TextSearchField | NumberSearchField)[];
+	fields: (TextSearchField | NumberSearchField | BooleanSearchField)[];
 }

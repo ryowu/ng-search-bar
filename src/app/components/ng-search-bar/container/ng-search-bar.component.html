@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-auto px-1" *ngFor="let filterUnit of filterUnits; let i = index">
 		<form [formGroup]="filterUnit.dataForm">
-			<div ngbDropdown class="d-inline-block">
+			<div ngbDropdown class="d-inline-block" *ngIf="!filterUnit.isBooleanType">
 				<!-- Chips button -->
 				<button type="button" [ngClass]="filterUnit.filterButtonClass" [id]="'filterDropdown_' + i.toString()"
 					ngbDropdownToggle>
@@ -12,32 +12,42 @@
 					class="shadow p-3 mt-2 mb-5 bg-white rounded border-0 popup-min-width">
 					<!-- Reset button -->
 					<div class="row justify-content-center">
-						<div class="col-10 mb-2">
+						<div class="col-12 mb-2">
 							<button type="button" class="btn btn-outline-secondary col-12"
 								(click)="filterUnit.onReset(); onSearchButtonClicked(filterUnit)">Reset</button>
 						</div>
 					</div>
 					<div class="row justify-content-center">
 						<!-- Text type -->
-						<div class="col-10" *ngIf="filterUnit.isStringType">
+						<div class="col-12" *ngIf="filterUnit.isStringType">
 							<input type="text" class="form-control" [placeholder]="filterUnit.textPlaceholder"
 								autocomplete="off" formControlName="textValue" />
 							<div class="form-check form-switch mt-2">
 								<input class="form-check-input" type="checkbox"
 									(id)="'caseSensitiveSwitch' + i.toString()" formControlName="isCaseSensitive">
-								<label class="form-check-label" for="caseSensitiveSwitch">Case-Sensitive</label>
+								<label class="form-check-label"
+									[for]="'caseSensitiveSwitch' + i.toString()">Case-Sensitive</label>
 							</div>
 						</div>
 					</div>
 					<div class="dropdown-divider"></div>
 					<!-- Show Result button -->
 					<div class="row justify-content-center">
-						<div class="col-10">
+						<div class="col-12">
 							<button type="button" class="btn btn-primary col-12"
 								(click)="onSearchButtonClicked(filterUnit)">Show
 								Result</button>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<div class="col-auto px-2" *ngIf="filterUnit.isBooleanType">
+				<div class="form-check form-switch mt-2">
+					<input class="form-check-input" type="checkbox" (id)="'checkedSwitch' + i.toString()"
+						formControlName="checked">
+					<label class="form-check-label" [for]="'checkedSwitch' + i.toString()">{{ filterUnit.fieldCaption
+						}}</label>
 				</div>
 			</div>
 		</form>

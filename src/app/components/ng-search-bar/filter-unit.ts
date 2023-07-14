@@ -1,5 +1,10 @@
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SearchField, SearchFieldType, TextSearchField } from './types';
+import {
+	BooleanSearchField,
+	SearchField,
+	SearchFieldType,
+	TextSearchField,
+} from './types';
 import { Subject, Subscription } from 'rxjs';
 
 export class FilterUnit {
@@ -18,7 +23,7 @@ export class FilterUnit {
 
 	constructor() {
 		this.sub = new Subscription();
-		this._field = { name: '', type: SearchFieldType.string };
+		this._field = { name: '', type: SearchFieldType.String };
 		this._caption = '';
 		this.currentChipButtonClass =
 			this._field.css?.buttonChip?.default || 'btn btn-primary';
@@ -26,7 +31,7 @@ export class FilterUnit {
 
 	//#region Get/Set
 	private get isDirty(): boolean {
-		if (this._field.type === SearchFieldType.string) {
+		if (this._field.type === SearchFieldType.String) {
 			const textValue = this._dataForm.get('textValue')?.value;
 			return textValue && textValue.trim() !== '';
 		} else {
@@ -65,7 +70,11 @@ export class FilterUnit {
 	}
 
 	public get isStringType(): boolean {
-		return this._field.type === SearchFieldType.string;
+		return this._field.type === SearchFieldType.String;
+	}
+
+	public get isBooleanType(): boolean {
+		return this._field.type === SearchFieldType.Boolean;
 	}
 
 	public set filterField(value: SearchField) {
@@ -77,7 +86,7 @@ export class FilterUnit {
 
 	private getRawCaption(): string {
 		const caption = this._field.caption || 'Field';
-		if (this._field.type === SearchFieldType.string) {
+		if (this._field.type === SearchFieldType.String) {
 			const textValue = this._dataForm.get('textValue')?.value;
 			return textValue ? `${caption} : ${textValue}` : caption;
 		} else {
@@ -88,12 +97,20 @@ export class FilterUnit {
 	private buildFilterDataForm() {
 		const formGroupConfig: { [key: string]: FormControl } = {};
 		switch (this._field.type) {
-			case SearchFieldType.string: {
+			case SearchFieldType.String: {
 				const textField: TextSearchField = this
 					._field as TextSearchField;
 				formGroupConfig['textValue'] = new FormControl();
 				formGroupConfig['isCaseSensitive'] = new FormControl(
 					textField.isCaseSensitive
+				);
+				break;
+			}
+			case SearchFieldType.Boolean: {
+				const booleanField: BooleanSearchField = this
+					._field as BooleanSearchField;
+				formGroupConfig['checked'] = new FormControl(
+					booleanField.checked
 				);
 				break;
 			}
@@ -106,10 +123,12 @@ export class FilterUnit {
 		}
 
 		this.sub = this._dataForm.valueChanges.subscribe((data) => {
-			if (this._field.type === SearchFieldType.string) {
+			if (this._field.type === SearchFieldType.String) {
 				if (data.textValue && this.autoEmitChange) {
 					this.$actionSource.next();
 				}
+			} else if (this._field.type === SearchFieldType.Boolean) {
+				this.$actionSource.next();
 			}
 		});
 	}
@@ -124,8 +143,14 @@ export class FilterUnit {
 
 	public getFilterResultObject(): any {
 		let result: any;
-		if (this.isDirty) {
-			if (this._field.type === SearchFieldType.string) {
+
+		if (this._field.type === SearchFieldType.Boolean) {
+			result = {};
+			result[this._field.name] = {
+				equalTo: this._dataForm.get('checked')?.value,
+			};
+		} else if (this.isDirty) {
+			if (this._field.type === SearchFieldType.String) {
 				const textField: TextSearchField = this
 					._field as TextSearchField;
 				const filterProperty: any = {};
@@ -143,6 +168,7 @@ export class FilterUnit {
 				result = filterProperty;
 			}
 		}
+
 		return result;
 	}
 
