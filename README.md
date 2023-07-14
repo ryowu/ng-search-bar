@@ -1,7 +1,7 @@
 # ng-search-bar
 Angular component that generates input UI for filtering data with JSON output
 
-# Let's see how to use:
+# Usage:
 Put below html in your target page template
 
 ```html
@@ -36,7 +36,11 @@ public config: SearchConfig = {
 
 The ng-search-bar will generate the search controls as below:
 
-![image](https://github.com/ryowu/ng-search-bar/assets/4537570/1617912d-0898-4977-8f8a-5e0116043250)
+![image](https://github.com/ryowu/ng-search-bar/assets/4537570/300dafce-2e2f-4a27-a082-571cd7b3a392)
 
+Search Criteria JSON output:
 
-In-progress, stay tuned, lol
+![image](https://github.com/ryowu/ng-search-bar/assets/4537570/476f41b4-5d36-468c-bbfa-5aeff9ab2c33)
+
+More features coming!
+In-progress...
