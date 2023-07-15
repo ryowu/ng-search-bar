@@ -1,6 +1,10 @@
 # ng-search-bar
 Angular component that generates input UI for filtering data with JSON output
 
+# Overview
+![image](https://github.com/ryowu/ng-search-bar/assets/4537570/2eae2dfb-bfe1-44e7-ac58-2afb6ed8a1dc)
+![image](https://github.com/ryowu/ng-search-bar/assets/4537570/3456f31a-3aab-4344-93d3-771d0c7f0c98)
+
 # Usage:
 Put below html in your target page template
 
@@ -14,24 +18,24 @@ Put below code in the page component class
 public config: SearchConfig = {
 	fields: [
 		{
-			name: 'Name',
-			type: SearchFieldType.string,
+			name: 'name',
+			type: SearchFieldType.String,
 			isCaseSensitive: false,
 		},
 		{
-			name: 'Category',
-			type: SearchFieldType.string,
+			name: 'age',
+			type: SearchFieldType.String,
 			isCaseSensitive: true,
 		},
 		{
-			name: 'Location',
-			type: SearchFieldType.string,
+			name: 'department',
+			type: SearchFieldType.String,
 			isCaseSensitive: false,
 		},
 		{
-			name: 'Enabled',
+			name: 'isActive',
 			type: SearchFieldType.Boolean,
-			caption: 'Enabled',
+			caption: 'Is Active',
 			checked: true,
 		},
 	],
@@ -42,7 +46,7 @@ public config: SearchConfig = {
 
 The ng-search-bar will generate the search controls as below:
 
-![image](https://github.com/ryowu/ng-search-bar/assets/4537570/f4bb01ba-4e81-422d-801d-17e448085582)
+![image](https://github.com/ryowu/ng-search-bar/assets/4537570/de9f8f67-2dab-4d69-ba76-35192d5f765c)
 
 Search Criteria JSON output:
 
