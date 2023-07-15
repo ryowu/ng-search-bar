@@ -36,7 +36,11 @@ export class SearchBarHelper {
 	}
 
 	private applyConfig(value: SearchConfig) {
-		this._config = { ...value };
+		this._config = {
+			...value,
+			closePopoverAfterFilterApply:
+				value.closePopoverAfterFilterApply || true,
+		};
 		this._config.fields = this._config.fields.map((f) => {
 			if (!f.css) {
 				f.css = this.buildDefaultFieldCss();
@@ -63,16 +67,23 @@ export class SearchBarHelper {
 			return unit;
 		});
 
-		let debounceTimeValue = this._config.autoRefreshDebounceTime || 200;
-		if (debounceTimeValue > 5000) {
-			debounceTimeValue = 5000;
-		}
 		const observables = this._filterUnits.map((unit) => unit.$actionSource);
-		this.sub = merge(...observables)
-			.pipe(debounceTime(debounceTimeValue))
-			.subscribe(() => {
+		if (this._config.autoRefresh) {
+			let debounceTimeValue = this._config.autoRefreshDebounceTime || 200;
+			if (debounceTimeValue > 5000) {
+				debounceTimeValue = 5000;
+			}
+
+			this.sub = merge(...observables)
+				.pipe(debounceTime(debounceTimeValue))
+				.subscribe(() => {
+					this.$actionSource.next();
+				});
+		} else {
+			this.sub = merge(...observables).subscribe(() => {
 				this.$actionSource.next();
 			});
+		}
 	}
 
 	public unsubscribe(): void {
@@ -81,19 +92,13 @@ export class SearchBarHelper {
 	}
 
 	public buildFilterObject(): any {
-		let result: any = {};
-		const andArray: any[] = [];
+		const result: any = {};
 		this.filterUnits.forEach((f) => {
 			const unitResult = f.getFilterResultObject();
 			if (unitResult) {
-				andArray.push(unitResult);
+				Object.assign(result, unitResult);
 			}
 		});
-		if (andArray.length > 0) {
-			result['and'] = andArray;
-		} else {
-			result = null;
-		}
 		return result;
 	}
 }

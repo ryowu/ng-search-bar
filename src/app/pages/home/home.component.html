@@ -1,5 +1,11 @@
 <div class="row mt-2 mx-2">
-    <div class="col-12">
-        <app-ng-search-bar [config]="config" (onFilterChanged)="onFilterChanged($event)"></app-ng-search-bar>
-    </div>
+	<div class="col-12">
+		<ng-search-bar [config]="config" (onFilterChanged)="onFilterChanged($event)"></ng-search-bar>
+	</div>
+</div>
+
+<div class="row mt-2 mx-2">
+	<div class="col-12">
+		<app-data-area [filterObject]="filterObject"></app-data-area>
+	</div>
 </div>

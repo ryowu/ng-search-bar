@@ -10,28 +10,30 @@ import {
 	styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+	public filterObject: any;
+
 	public config: SearchConfig = {
 		// autoRefresh: true,
 		fields: [
 			{
-				name: 'Name',
+				name: 'name',
 				type: SearchFieldType.String,
 				isCaseSensitive: false,
 			},
 			{
-				name: 'Category',
+				name: 'age',
 				type: SearchFieldType.String,
 				isCaseSensitive: true,
 			},
 			{
-				name: 'Location',
+				name: 'department',
 				type: SearchFieldType.String,
 				isCaseSensitive: false,
 			},
 			{
-				name: 'Enabled',
+				name: 'isActive',
 				type: SearchFieldType.Boolean,
-				caption: 'Enabled',
+				caption: 'Is Active',
 				checked: true,
 			},
 		],
@@ -40,7 +42,8 @@ export class HomeComponent implements OnInit {
 
 	public ngOnInit(): void {}
 
-	public onFilterChanged(filterObject: any) {
+	public onFilterChanged(filter: any) {
 		// Use the filterObject in your database query
+		this.filterObject = filter;
 	}
 }

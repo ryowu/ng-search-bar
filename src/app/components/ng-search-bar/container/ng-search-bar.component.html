@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-auto px-1" *ngFor="let filterUnit of filterUnits; let i = index">
 		<form [formGroup]="filterUnit.dataForm">
-			<div ngbDropdown class="d-inline-block" *ngIf="!filterUnit.isBooleanType">
+			<div ngbDropdown #dropdownHandle="ngbDropdown" class="d-inline-block" *ngIf="!filterUnit.isBooleanType">
 				<!-- Chips button -->
 				<button type="button" [ngClass]="filterUnit.filterButtonClass" [id]="'filterDropdown_' + i.toString()"
 					ngbDropdownToggle>
@@ -14,7 +14,7 @@
 					<div class="row justify-content-center">
 						<div class="col-12 mb-2">
 							<button type="button" class="btn btn-outline-secondary col-12"
-								(click)="filterUnit.onReset(); onSearchButtonClicked(filterUnit)">Reset</button>
+								(click)="filterUnit.onReset(); onSearchButtonClicked(filterUnit);">Reset</button>
 						</div>
 					</div>
 					<div class="row justify-content-center">

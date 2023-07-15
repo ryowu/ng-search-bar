@@ -33,5 +33,6 @@ export interface BooleanSearchField extends SearchField {
 export interface SearchConfig {
 	autoRefresh?: boolean;
 	autoRefreshDebounceTime?: number;
+	closePopoverAfterFilterApply?: boolean;
 	fields: (TextSearchField | NumberSearchField | BooleanSearchField)[];
 }

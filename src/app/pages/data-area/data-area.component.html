@@ -1,0 +1,20 @@
+<table class="table">
+	<thead>
+		<tr>
+			<!-- <th>#</th> -->
+			<th>Name</th>
+			<th>Age</th>
+			<th>Department</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let user of users">
+			<!-- <td>{{ i + 1 }}</td> -->
+			<td>{{ user.name }}</td>
+			<td>{{ user.age }}</td>
+			<td>{{ user.department }}</td>
+			<td>{{ user.isActive ? 'Active' : 'Inactive' }}</td>
+		</tr>
+	</tbody>
+</table>
