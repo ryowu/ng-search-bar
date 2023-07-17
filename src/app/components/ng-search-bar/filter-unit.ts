@@ -178,7 +178,9 @@ export class FilterUnit {
 				}
 			}
 			if (this._field.type === SearchFieldType.Number) {
-				this.$actionSource.next();
+				if (this.autoEmitChange) {
+					this.$actionSource.next();
+				}
 			} else if (this._field.type === SearchFieldType.Boolean) {
 				this.$actionSource.next();
 			}
