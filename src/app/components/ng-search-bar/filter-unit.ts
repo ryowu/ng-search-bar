@@ -1,6 +1,7 @@
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {
 	BooleanSearchField,
+	NumberSearchField,
 	SearchField,
 	SearchFieldType,
 	TextSearchField,
@@ -34,6 +35,13 @@ export class FilterUnit {
 		if (this._field.type === SearchFieldType.String) {
 			const textValue = this._dataForm.get('textValue')?.value;
 			return textValue && textValue.trim() !== '';
+		}
+		if (this._field.type === SearchFieldType.Number) {
+			return (
+				this._dataForm.get('currentMin')?.dirty ||
+				this._dataForm.get('currentMax')?.dirty ||
+				false
+			);
 		} else {
 			return this._dataForm.dirty;
 		}
@@ -59,6 +67,24 @@ export class FilterUnit {
 		return `Enter ${caption}`;
 	}
 
+	public get currentMinValue(): FormControl {
+		return this._dataForm.get('currentMin') as FormControl;
+	}
+
+	public get currentMaxValue(): FormControl {
+		return this._dataForm.get('currentMax') as FormControl;
+	}
+
+	public get minValue(): number {
+		const numberField = this._field as NumberSearchField;
+		return numberField.min;
+	}
+
+	public get maxValue(): number {
+		const numberField = this._field as NumberSearchField;
+		return numberField.max;
+	}
+
 	public get filterButtonClass(): string {
 		if (this.autoEmitChange) {
 			return this.isDirty
@@ -71,6 +97,10 @@ export class FilterUnit {
 
 	public get isStringType(): boolean {
 		return this._field.type === SearchFieldType.String;
+	}
+
+	public get isNumberType(): boolean {
+		return this._field.type === SearchFieldType.Number;
 	}
 
 	public get isBooleanType(): boolean {
@@ -86,9 +116,17 @@ export class FilterUnit {
 
 	private getRawCaption(): string {
 		const caption = this._field.caption || 'Field';
+		if (!this.isDirty) {
+			return caption;
+		}
+
 		if (this._field.type === SearchFieldType.String) {
 			const textValue = this._dataForm.get('textValue')?.value;
 			return textValue ? `${caption} : ${textValue}` : caption;
+		} else if (this._field.type === SearchFieldType.Number) {
+			const minValue = this._dataForm.get('currentMin')?.value;
+			const maxValue = this._dataForm.get('currentMax')?.value;
+			return `${caption} : ${minValue}~${maxValue}`;
 		} else {
 			return caption;
 		}
@@ -103,6 +141,17 @@ export class FilterUnit {
 				formGroupConfig['textValue'] = new FormControl();
 				formGroupConfig['isCaseSensitive'] = new FormControl(
 					textField.isCaseSensitive
+				);
+				break;
+			}
+			case SearchFieldType.Number: {
+				const numberField: NumberSearchField = this
+					._field as NumberSearchField;
+				formGroupConfig['currentMin'] = new FormControl(
+					numberField.min
+				);
+				formGroupConfig['currentMax'] = new FormControl(
+					numberField.max
 				);
 				break;
 			}
@@ -127,6 +176,9 @@ export class FilterUnit {
 				if (data.textValue && this.autoEmitChange) {
 					this.$actionSource.next();
 				}
+			}
+			if (this._field.type === SearchFieldType.Number) {
+				this.$actionSource.next();
 			} else if (this._field.type === SearchFieldType.Boolean) {
 				this.$actionSource.next();
 			}
@@ -167,13 +219,34 @@ export class FilterUnit {
 
 				result = filterProperty;
 			}
+			if (this._field.type === SearchFieldType.Number) {
+				result = {};
+				result[this._field.name] = {
+					largeThanOrEqualTo: this._dataForm.get('currentMin')?.value,
+					lessThanOrEqualTo: this._dataForm.get('currentMax')?.value,
+				};
+			}
 		}
 
 		return result;
 	}
 
 	public onReset(): void {
-		this._dataForm.reset();
+		if (this._field.type === SearchFieldType.Number) {
+			const numberField = this._field as NumberSearchField;
+			this._dataForm.reset(
+				{
+					min: numberField.min,
+					max: numberField.max,
+					currentMin: numberField.min,
+					currentMax: numberField.max,
+				},
+				{ emitEvent: false }
+			);
+		} else {
+			this._dataForm.reset();
+		}
+
 		this.currentChipButtonClass =
 			this._field.css?.buttonChip?.default || 'btn btn-primary';
 		this._caption = this._field.caption || '';

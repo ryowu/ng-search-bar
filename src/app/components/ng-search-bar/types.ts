@@ -18,6 +18,7 @@ export interface SearchField {
 
 export interface NumberSearchField extends SearchField {
 	min: number;
+	max: number;
 }
 
 export interface TextSearchField extends SearchField {

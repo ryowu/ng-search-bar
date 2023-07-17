@@ -22,8 +22,9 @@ export class HomeComponent implements OnInit {
 			},
 			{
 				name: 'age',
-				type: SearchFieldType.String,
-				isCaseSensitive: true,
+				type: SearchFieldType.Number,
+				min: 1,
+				max: 120,
 			},
 			{
 				name: 'department',
@@ -44,6 +45,8 @@ export class HomeComponent implements OnInit {
 
 	public onFilterChanged(filter: any) {
 		// Use the filterObject in your database query
+		console.log(filter);
+		
 		this.filterObject = filter;
 	}
 }

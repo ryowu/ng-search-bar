@@ -150,8 +150,15 @@ export class DataAreaComponent implements OnInit {
 				isNameMatch = true;
 			}
 
-			if (filterObject.age && user.age !== filterObject.age.equalTo) {
-				isAgeMatch = false;
+			if (filterObject.age) {
+				if (
+					filterObject.age.lessThanOrEqualTo >= user.age &&
+					filterObject.age.largeThanOrEqualTo <= user.age
+				) {
+					isAgeMatch = true;
+				} else {
+					isAgeMatch = false;
+				}
 			} else {
 				isAgeMatch = true;
 			}

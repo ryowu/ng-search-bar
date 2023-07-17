@@ -5,11 +5,13 @@ import {
 	OnInit,
 	Output,
 	ViewChild,
+	ViewChildren,
 } from '@angular/core';
 import { SearchConfig } from '../types';
 import { FilterUnit } from '../filter-unit';
 import { SearchBarHelper } from '../helper';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'ng-search-bar',
@@ -19,8 +21,8 @@ import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 export class NgSearchBarComponent implements OnInit {
 	private readonly helper: SearchBarHelper = new SearchBarHelper();
 
-	@ViewChild('dropdownHandle', { static: false })
-	public dropdownHandle!: NgbDropdown;
+	@ViewChildren('dropdownHandle')
+	public dropdownHandles!: NgbDropdown[];
 	@Output() onFilterChanged: EventEmitter<any> = new EventEmitter<any>();
 	@Input() public set config(value: SearchConfig) {
 		this.helper.config = value;
@@ -45,10 +47,22 @@ export class NgSearchBarComponent implements OnInit {
 	public onSearchButtonClicked(filterUnit: FilterUnit): void {
 		filterUnit.onSearchButtonClicked();
 		if (
-			this.dropdownHandle &&
+			this.dropdownHandles &&
 			this.helper.config.closePopoverAfterFilterApply
 		) {
-			this.dropdownHandle.close();
+			this.dropdownHandles.forEach((d) => {
+				d.close();
+			});
 		}
+	}
+
+	public onStartInputChange(event: Event, filterUnit: FilterUnit) {
+		const startValue = parseInt((event.target as HTMLInputElement).value);
+		filterUnit.currentMinValue.patchValue(startValue);
+	}
+
+	public onEndInputChange(event: Event, filterUnit: FilterUnit) {
+		const endValue = parseInt((event.target as HTMLInputElement).value);
+		filterUnit.currentMaxValue.patchValue(endValue);
 	}
 }

@@ -29,6 +29,26 @@
 									[for]="'caseSensitiveSwitch' + i.toString()">Case-Sensitive</label>
 							</div>
 						</div>
+						<!-- Number type -->
+						<div class="col-12" *ngIf="filterUnit.isNumberType">
+							<mat-slider [min]="filterUnit.minValue" [max]="filterUnit.maxValue" tickInterval="1">
+								<input matSliderStartThumb [value]="filterUnit.currentMinValue.value"
+									formControlName="currentMin" (input)="onStartInputChange($event, filterUnit)">
+								<input matSliderEndThumb [value]="filterUnit.currentMaxValue.value"
+									formControlName="currentMax" (input)="onEndInputChange($event, filterUnit)">
+							</mat-slider>
+
+							<div class="row">
+								<div class="col-6">
+									<label for="minInput">Min</label>
+									<input matInput type="number" class="form-control" formControlName="currentMin">
+								</div>
+								<div class="col-6">
+									<label for="maxInput">Max</label>
+									<input matInput type="number" class="form-control" formControlName="currentMax">
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="dropdown-divider"></div>
 					<!-- Show Result button -->
@@ -42,6 +62,7 @@
 				</div>
 			</div>
 
+			<!-- Boolean type -->
 			<div class="col-auto px-2" *ngIf="filterUnit.isBooleanType">
 				<div class="form-check form-switch mt-2">
 					<input class="form-check-input" type="checkbox" (id)="'checkedSwitch' + i.toString()"
