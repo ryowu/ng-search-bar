@@ -52,7 +52,7 @@ The ng-search-bar will generate the search controls as below:
 
 Search Criteria JSON output:
 
-![image](https://github.com/ryowu/ng-search-bar/assets/4537570/1daafa6e-9e96-4b47-95f5-0a1855a75088)
+![image](https://github.com/ryowu/ng-search-bar/assets/4537570/03fcc565-c862-484d-be91-09825ea96091)
 
 More features coming!
 In-progress...
