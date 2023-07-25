@@ -45,8 +45,8 @@ export class HomeComponent implements OnInit {
 
 	public onFilterChanged(filter: any) {
 		// Use the filterObject in your database query
-		console.log(filter);
-		
+		console.log(JSON.stringify(filter));
+
 		this.filterObject = filter;
 	}
 }
