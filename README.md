@@ -50,6 +50,8 @@ The ng-search-bar will generate the search controls as below:
 
 ![image](https://github.com/ryowu/ng-search-bar/assets/4537570/eb4c3ab5-006f-462d-8e71-2e169cb4df29)
 
+![image](https://github.com/ryowu/ng-search-bar/assets/4537570/32eec526-f0ae-43ca-ab12-675c2c802dc1)
+
 Search Criteria JSON output:
 
 ![image](https://github.com/ryowu/ng-search-bar/assets/4537570/03fcc565-c862-484d-be91-09825ea96091)
