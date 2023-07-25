@@ -11,7 +11,6 @@ import { SearchConfig } from '../types';
 import { FilterUnit } from '../filter-unit';
 import { SearchBarHelper } from '../helper';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'ng-search-bar',
@@ -54,15 +53,5 @@ export class NgSearchBarComponent implements OnInit {
 				d.close();
 			});
 		}
-	}
-
-	public onStartInputChange(event: Event, filterUnit: FilterUnit) {
-		const startValue = parseInt((event.target as HTMLInputElement).value);
-		filterUnit.currentMinValue.patchValue(startValue);
-	}
-
-	public onEndInputChange(event: Event, filterUnit: FilterUnit) {
-		const endValue = parseInt((event.target as HTMLInputElement).value);
-		filterUnit.currentMaxValue.patchValue(endValue);
 	}
 }

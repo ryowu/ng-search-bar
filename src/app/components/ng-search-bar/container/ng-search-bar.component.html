@@ -32,20 +32,22 @@
 						<!-- Number type -->
 						<div class="col-12" *ngIf="filterUnit.isNumberType">
 							<mat-slider [min]="filterUnit.minValue" [max]="filterUnit.maxValue" tickInterval="1">
-								<input matSliderStartThumb [value]="filterUnit.currentMinValue.value"
-									formControlName="currentMin" (input)="onStartInputChange($event, filterUnit)">
-								<input matSliderEndThumb [value]="filterUnit.currentMaxValue.value"
-									formControlName="currentMax" (input)="onEndInputChange($event, filterUnit)">
+								<input matSliderStartThumb formControlName="currentMin"
+									[value]="filterUnit.dataForm.value.currentMin">
+								<input matSliderEndThumb formControlName="currentMax"
+									[value]="filterUnit.dataForm.value.currentMax">
 							</mat-slider>
 
 							<div class="row">
 								<div class="col-6">
 									<label for="minInput">Min</label>
-									<input matInput type="number" class="form-control" formControlName="currentMin">
+									<input matInput type="number" class="form-control" formControlName="currentMin"
+										[value]="filterUnit.dataForm.value.currentMin">
 								</div>
 								<div class="col-6">
 									<label for="maxInput">Max</label>
-									<input matInput type="number" class="form-control" formControlName="currentMax">
+									<input matInput type="number" class="form-control" formControlName="currentMax"
+										[value]="filterUnit.dataForm.value.currentMax">
 								</div>
 							</div>
 						</div>
