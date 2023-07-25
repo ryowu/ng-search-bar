@@ -54,7 +54,23 @@ The ng-search-bar will generate the search controls as below:
 
 Search Criteria JSON output:
 
-![image](https://github.com/ryowu/ng-search-bar/assets/4537570/03fcc565-c862-484d-be91-09825ea96091)
+```json
+{
+   "name":{
+      "includes":"John"
+   },
+   "age":{
+      "largeThanOrEqualTo":16,
+      "lessThanOrEqualTo":62
+   },
+   "department":{
+      "includesSensitive":"IT"
+   },
+   "isActive":{
+      "equalTo":true
+   }
+}
+```
 
 More features coming!
 In-progress...
