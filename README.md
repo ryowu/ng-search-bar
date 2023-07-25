@@ -16,6 +16,7 @@ Put below code in the page component class
 
 ```typescript
 public config: SearchConfig = {
+	autoRefresh: true,
 	fields: [
 		{
 			name: 'name',
@@ -25,7 +26,8 @@ public config: SearchConfig = {
 		{
 			name: 'age',
 			type: SearchFieldType.Number,
-			isCaseSensitive: true,
+			min: 1,
+			max: 120,
 		},
 		{
 			name: 'department',
