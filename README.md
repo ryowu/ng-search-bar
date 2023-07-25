@@ -9,7 +9,7 @@ Angular component that generates input UI for filtering data with JSON output
 Put below html in your target page template
 
 ```html
-<app-ng-search-bar [config]="config" (onFilterChanged)="onFilterChanged($event)"></app-ng-search-bar>
+<ng-search-bar [config]="config" (onFilterChanged)="onFilterChanged($event)"></ng-search-bar>
 ```
 
 Put below code in the page component class
@@ -24,7 +24,7 @@ public config: SearchConfig = {
 		},
 		{
 			name: 'age',
-			type: SearchFieldType.String,
+			type: SearchFieldType.Number,
 			isCaseSensitive: true,
 		},
 		{
