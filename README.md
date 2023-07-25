@@ -9,13 +9,14 @@ Angular component that generates input UI for filtering data with JSON output
 Put below html in your target page template
 
 ```html
-<app-ng-search-bar [config]="config" (onFilterChanged)="onFilterChanged($event)"></app-ng-search-bar>
+<ng-search-bar [config]="config" (onFilterChanged)="onFilterChanged($event)"></ng-search-bar>
 ```
 
 Put below code in the page component class
 
 ```typescript
 public config: SearchConfig = {
+	autoRefresh: true,
 	fields: [
 		{
 			name: 'name',
@@ -24,8 +25,9 @@ public config: SearchConfig = {
 		},
 		{
 			name: 'age',
-			type: SearchFieldType.String,
-			isCaseSensitive: true,
+			type: SearchFieldType.Number,
+			min: 1,
+			max: 120,
 		},
 		{
 			name: 'department',
@@ -50,9 +52,27 @@ The ng-search-bar will generate the search controls as below:
 
 ![image](https://github.com/ryowu/ng-search-bar/assets/4537570/eb4c3ab5-006f-462d-8e71-2e169cb4df29)
 
+![image](https://github.com/ryowu/ng-search-bar/assets/4537570/32eec526-f0ae-43ca-ab12-675c2c802dc1)
+
 Search Criteria JSON output:
 
-![image](https://github.com/ryowu/ng-search-bar/assets/4537570/03fcc565-c862-484d-be91-09825ea96091)
+```json
+{
+   "name":{
+      "includes":"John"
+   },
+   "age":{
+      "largeThanOrEqualTo":16,
+      "lessThanOrEqualTo":62
+   },
+   "department":{
+      "includesSensitive":"IT"
+   },
+   "isActive":{
+      "equalTo":true
+   }
+}
+```
 
 More features coming!
 In-progress...
