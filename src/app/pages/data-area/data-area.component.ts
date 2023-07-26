@@ -166,7 +166,7 @@ export class DataAreaComponent implements OnInit {
 			if (filterObject.department) {
 				if (
 					filterObject.department.includesSensitive &&
-					user.department.includes(filterObject.department.includes)
+					user.department.includes(filterObject.department.includesSensitive)
 				) {
 					isDepartmentMatch = true;
 				} else if (
