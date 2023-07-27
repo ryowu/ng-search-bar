@@ -4,7 +4,6 @@ Angular component that generates input UI for filtering data with JSON output
 ### [Live Demo hosted in github page](https://ryowu.github.io/ng-search-bar/)
 
 # Overview
-![image](https://github.com/ryowu/ng-search-bar/assets/4537570/2eae2dfb-bfe1-44e7-ac58-2afb6ed8a1dc)
 ![image](https://github.com/ryowu/ng-search-bar/assets/4537570/3456f31a-3aab-4344-93d3-771d0c7f0c98)
 
 # Usage:
