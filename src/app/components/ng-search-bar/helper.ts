@@ -6,7 +6,7 @@ export class SearchBarHelper {
 	private sub: Subscription;
 	private _config: SearchConfig;
 	private _filterUnits: FilterUnit[] = [];
-	public $actionSource: Subject<void> = new Subject<void>();
+	public $actionSource: Subject<boolean> = new Subject<boolean>();
 
 	constructor() {
 		this._config = { autoRefresh: false, fields: [] };
@@ -76,12 +76,12 @@ export class SearchBarHelper {
 
 			this.sub = merge(...observables)
 				.pipe(debounceTime(debounceTimeValue))
-				.subscribe(() => {
-					this.$actionSource.next();
+				.subscribe((data) => {
+					this.$actionSource.next(data);
 				});
 		} else {
-			this.sub = merge(...observables).subscribe(() => {
-				this.$actionSource.next();
+			this.sub = merge(...observables).subscribe((data) => {
+				this.$actionSource.next(data);
 			});
 		}
 	}

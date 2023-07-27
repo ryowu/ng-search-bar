@@ -10,6 +10,9 @@ import { AppComponent } from './app.component';
 import { NgSearchBarComponent } from './components/ng-search-bar/container/ng-search-bar.component';
 import { DataAreaComponent } from './pages/data-area/data-area.component';
 import { HomeComponent } from './pages/home/home.component';
+import { PopoverPanelComponent } from './components/ng-search-bar/panels/popover-panel/popover-panel.component';
+import { TextPanelComponent } from './components/ng-search-bar/panels/text-panel/text-panel.component';
+import { NumberPanelComponent } from './components/ng-search-bar/panels/number-panel/number-panel.component';
 
 @NgModule({
 	declarations: [
@@ -17,6 +20,9 @@ import { HomeComponent } from './pages/home/home.component';
 		HomeComponent,
 		NgSearchBarComponent,
 		DataAreaComponent,
+		PopoverPanelComponent,
+		TextPanelComponent,
+		NumberPanelComponent,
 	],
 	imports: [
 		BrowserModule,

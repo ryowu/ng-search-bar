@@ -1,0 +1,17 @@
+<app-popover-panel #parentPanel [filterUnit]="filterUnit" [identifier]="identifier">
+	<div class="detail-panel">
+		<form [formGroup]="filterUnit.dataForm">
+			<!-- Text type -->
+			<div class="col-12">
+				<input type="text" class="form-control" [placeholder]="filterUnit.textPlaceholder" autocomplete="off"
+					formControlName="textValue" />
+				<div class="form-check form-switch mt-2">
+					<input class="form-check-input" type="checkbox" (id)="'caseSensitiveSwitch' + identifier.toString()"
+						formControlName="isCaseSensitive">
+					<label class="form-check-label"
+						[for]="'caseSensitiveSwitch' + identifier.toString()">Case-Sensitive</label>
+				</div>
+			</div>
+		</form>
+	</div>
+</app-popover-panel>

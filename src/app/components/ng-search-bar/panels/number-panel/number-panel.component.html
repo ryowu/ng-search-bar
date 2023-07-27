@@ -1,0 +1,28 @@
+<app-popover-panel [filterUnit]="filterUnit" [identifier]="identifier">
+	<div class="detail-panel">
+		<form [formGroup]="filterUnit.dataForm">
+			<!-- Number type -->
+			<div class="col-12">
+				<mat-slider [min]="filterUnit.minValue" [max]="filterUnit.maxValue" tickInterval="1">
+					<input matSliderStartThumb formControlName="currentMin"
+						[value]="filterUnit.dataForm.value.currentMin">
+					<input matSliderEndThumb formControlName="currentMax"
+						[value]="filterUnit.dataForm.value.currentMax">
+				</mat-slider>
+
+				<div class="row">
+					<div class="col-6">
+						<label for="minInput">Min</label>
+						<input matInput type="number" class="form-control" formControlName="currentMin"
+							[value]="filterUnit.dataForm.value.currentMin">
+					</div>
+					<div class="col-6">
+						<label for="maxInput">Max</label>
+						<input matInput type="number" class="form-control" formControlName="currentMax"
+							[value]="filterUnit.dataForm.value.currentMax">
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</app-popover-panel>

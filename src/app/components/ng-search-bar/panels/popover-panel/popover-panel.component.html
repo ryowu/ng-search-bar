@@ -1,0 +1,30 @@
+<div ngbDropdown #dropdownHandle="ngbDropdown" class="d-inline-block">
+	<!-- Chips button -->
+	<button type="button" [ngClass]="filterUnit.filterButtonClass" [id]="'filterDropdown_' + identifier.toString()"
+		ngbDropdownToggle>
+		{{ filterUnit.fieldCaption }}
+	</button>
+	<!-- Popup area -->
+	<div ngbDropdownMenu (aria-labelledby)="'dropdownForm_' + identifier.toString()"
+		class="shadow p-3 mt-2 mb-5 bg-white rounded border-0 popup-min-width">
+		<!-- Reset button -->
+		<div class="row justify-content-center">
+			<div class="col-12 mb-2">
+				<button type="button" class="btn btn-outline-secondary col-12"
+					(click)="filterUnit.onReset(); onSearchButtonClicked();">Reset</button>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<!-- specific type -->
+			<ng-content select=".detail-panel"></ng-content>
+		</div>
+		<div class="dropdown-divider"></div>
+		<!-- Show Result button -->
+		<div class="row justify-content-center">
+			<div class="col-12">
+				<button type="button" class="btn btn-primary col-12" (click)="onSearchButtonClicked()">Show
+					Result</button>
+			</div>
+		</div>
+	</div>
+</div>

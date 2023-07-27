@@ -20,8 +20,8 @@ import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 export class NgSearchBarComponent implements OnInit {
 	private readonly helper: SearchBarHelper = new SearchBarHelper();
 
-	@ViewChildren('dropdownHandle')
-	public dropdownHandles!: NgbDropdown[];
+	// @ViewChildren('dropdownHandle')
+	// public dropdownHandles!: NgbDropdown[];
 	@Output() onFilterChanged: EventEmitter<any> = new EventEmitter<any>();
 	@Input() public set config(value: SearchConfig) {
 		this.helper.config = value;
@@ -34,24 +34,22 @@ export class NgSearchBarComponent implements OnInit {
 	}
 
 	public ngOnInit(): void {
-		this.helper.$actionSource.subscribe(() => {
+		this.helper.$actionSource.subscribe((data) => {
+			// if (
+			// 	data &&
+			// 	this.dropdownHandles &&
+			// 	this.helper.config.closePopoverAfterFilterApply
+			// ) {
+			// 	this.dropdownHandles.forEach((d) => {
+			// 		d.close();
+			// 	});
+			// }
+
 			const filterObject = this.helper.buildFilterObject();
 
 			if (this.onFilterChanged) {
 				this.onFilterChanged.emit(filterObject);
 			}
 		});
-	}
-
-	public onSearchButtonClicked(filterUnit: FilterUnit): void {
-		filterUnit.onSearchButtonClicked();
-		if (
-			this.dropdownHandles &&
-			this.helper.config.closePopoverAfterFilterApply
-		) {
-			this.dropdownHandles.forEach((d) => {
-				d.close();
-			});
-		}
 	}
 }

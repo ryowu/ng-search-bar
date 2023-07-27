@@ -1,79 +1,15 @@
 <div class="row">
 	<div class="col-auto px-1" *ngFor="let filterUnit of filterUnits; let i = index">
-		<form [formGroup]="filterUnit.dataForm">
-			<div ngbDropdown #dropdownHandle="ngbDropdown" class="d-inline-block" *ngIf="!filterUnit.isBooleanType">
-				<!-- Chips button -->
-				<button type="button" [ngClass]="filterUnit.filterButtonClass" [id]="'filterDropdown_' + i.toString()"
-					ngbDropdownToggle>
-					{{ filterUnit.fieldCaption }}
-				</button>
-				<!-- Popup area -->
-				<div ngbDropdownMenu (aria-labelledby)="'dropdownForm_' + i.toString()"
-					class="shadow p-3 mt-2 mb-5 bg-white rounded border-0 popup-min-width">
-					<!-- Reset button -->
-					<div class="row justify-content-center">
-						<div class="col-12 mb-2">
-							<button type="button" class="btn btn-outline-secondary col-12"
-								(click)="filterUnit.onReset(); onSearchButtonClicked(filterUnit);">Reset</button>
-						</div>
-					</div>
-					<div class="row justify-content-center">
-						<!-- Text type -->
-						<div class="col-12" *ngIf="filterUnit.isStringType">
-							<input type="text" class="form-control" [placeholder]="filterUnit.textPlaceholder"
-								autocomplete="off" formControlName="textValue" />
-							<div class="form-check form-switch mt-2">
-								<input class="form-check-input" type="checkbox"
-									(id)="'caseSensitiveSwitch' + i.toString()" formControlName="isCaseSensitive">
-								<label class="form-check-label"
-									[for]="'caseSensitiveSwitch' + i.toString()">Case-Sensitive</label>
-							</div>
-						</div>
-						<!-- Number type -->
-						<div class="col-12" *ngIf="filterUnit.isNumberType">
-							<mat-slider [min]="filterUnit.minValue" [max]="filterUnit.maxValue" tickInterval="1">
-								<input matSliderStartThumb formControlName="currentMin"
-									[value]="filterUnit.dataForm.value.currentMin">
-								<input matSliderEndThumb formControlName="currentMax"
-									[value]="filterUnit.dataForm.value.currentMax">
-							</mat-slider>
-
-							<div class="row">
-								<div class="col-6">
-									<label for="minInput">Min</label>
-									<input matInput type="number" class="form-control" formControlName="currentMin"
-										[value]="filterUnit.dataForm.value.currentMin">
-								</div>
-								<div class="col-6">
-									<label for="maxInput">Max</label>
-									<input matInput type="number" class="form-control" formControlName="currentMax"
-										[value]="filterUnit.dataForm.value.currentMax">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="dropdown-divider"></div>
-					<!-- Show Result button -->
-					<div class="row justify-content-center">
-						<div class="col-12">
-							<button type="button" class="btn btn-primary col-12"
-								(click)="onSearchButtonClicked(filterUnit)">Show
-								Result</button>
-						</div>
-					</div>
-				</div>
+		<app-number-panel *ngIf="filterUnit.isNumberType" [filterUnit]="filterUnit" [identifier]="i"></app-number-panel>
+		<app-text-panel *ngIf="filterUnit.isStringType" [filterUnit]="filterUnit" [identifier]="i"></app-text-panel>
+		<!-- Boolean type -->
+		<!-- <div class="col-auto px-2" *ngIf="filterUnit.isBooleanType">
+			<div class="form-check form-switch mt-2">
+				<input class="form-check-input" type="checkbox" (id)="'checkedSwitch' + i.toString()"
+					formControlName="checked">
+				<label class="form-check-label" [for]="'checkedSwitch' + i.toString()">{{ filterUnit.fieldCaption
+					}}</label>
 			</div>
-
-			<!-- Boolean type -->
-			<div class="col-auto px-2" *ngIf="filterUnit.isBooleanType">
-				<div class="form-check form-switch mt-2">
-					<input class="form-check-input" type="checkbox" (id)="'checkedSwitch' + i.toString()"
-						formControlName="checked">
-					<label class="form-check-label" [for]="'checkedSwitch' + i.toString()">{{ filterUnit.fieldCaption
-						}}</label>
-				</div>
-			</div>
-		</form>
+		</div> -->
 	</div>
-
 </div>

@@ -19,7 +19,7 @@ export class FilterUnit {
 	private currentChipButtonClass = '';
 
 	public autoEmitChange = false;
-	public $actionSource: Subject<void> = new Subject<void>();
+	public $actionSource: Subject<boolean> = new Subject<boolean>();
 	//#endregion
 
 	constructor() {
@@ -174,15 +174,15 @@ export class FilterUnit {
 		this.sub = this._dataForm.valueChanges.subscribe((data) => {
 			if (this._field.type === SearchFieldType.String) {
 				if (data.textValue && this.autoEmitChange) {
-					this.$actionSource.next();
+					this.$actionSource.next(false);
 				}
 			}
 			if (this._field.type === SearchFieldType.Number) {
 				if (this.autoEmitChange) {
-					this.$actionSource.next();
+					this.$actionSource.next(false);
 				}
 			} else if (this._field.type === SearchFieldType.Boolean) {
-				this.$actionSource.next();
+				this.$actionSource.next(false);
 			}
 		});
 	}
@@ -260,6 +260,6 @@ export class FilterUnit {
 			: this._field.css?.buttonChip?.default || 'btn btn-primary';
 
 		this._caption = this.getRawCaption();
-		this.$actionSource.next();
+		this.$actionSource.next(true);
 	}
 }

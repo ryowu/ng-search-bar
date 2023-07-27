@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 	public filterObject: any;
 
 	public config: SearchConfig = {
-		// autoRefresh: true,
+		autoRefresh: true,
 		fields: [
 			{
 				name: 'name',
