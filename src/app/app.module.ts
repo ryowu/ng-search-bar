@@ -13,6 +13,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { PopoverPanelComponent } from './components/ng-search-bar/panels/popover-panel/popover-panel.component';
 import { TextPanelComponent } from './components/ng-search-bar/panels/text-panel/text-panel.component';
 import { NumberPanelComponent } from './components/ng-search-bar/panels/number-panel/number-panel.component';
+import { BooleanPanelComponent } from './components/ng-search-bar/panels/boolean-panel/boolean-panel.component';
 
 @NgModule({
 	declarations: [
@@ -23,6 +24,7 @@ import { NumberPanelComponent } from './components/ng-search-bar/panels/number-p
 		PopoverPanelComponent,
 		TextPanelComponent,
 		NumberPanelComponent,
+		BooleanPanelComponent,
 	],
 	imports: [
 		BrowserModule,

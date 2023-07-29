@@ -1,0 +1,11 @@
+<!-- Boolean type -->
+<form [formGroup]="filterUnit.dataForm">
+	<div class="col-auto px-2" *ngIf="filterUnit.isBooleanType">
+		<div class="form-check form-switch mt-2">
+			<input class="form-check-input" type="checkbox" (id)="'checkedSwitch' + identifier.toString()"
+				formControlName="checked">
+			<label class="form-check-label" [for]="'checkedSwitch' + identifier.toString()">{{ filterUnit.fieldCaption
+				}}</label>
+		</div>
+	</div>
+</form>

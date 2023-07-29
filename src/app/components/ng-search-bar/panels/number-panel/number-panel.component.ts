@@ -1,12 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { FilterUnit } from '../../filter-unit';
+import { Component } from '@angular/core';
+import { BasePanel } from '../base-panel';
 
 @Component({
 	selector: 'app-number-panel',
 	templateUrl: './number-panel.component.html',
 	styleUrls: ['./number-panel.component.scss'],
 })
-export class NumberPanelComponent {
-	@Input() public filterUnit: FilterUnit = new FilterUnit();
-	@Input() public identifier: number = 0;
-}
+export class NumberPanelComponent extends BasePanel {}

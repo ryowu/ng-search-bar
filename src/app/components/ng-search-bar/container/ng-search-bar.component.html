@@ -2,14 +2,8 @@
 	<div class="col-auto px-1" *ngFor="let filterUnit of filterUnits; let i = index">
 		<app-number-panel *ngIf="filterUnit.isNumberType" [filterUnit]="filterUnit" [identifier]="i"></app-number-panel>
 		<app-text-panel *ngIf="filterUnit.isStringType" [filterUnit]="filterUnit" [identifier]="i"></app-text-panel>
-		<!-- Boolean type -->
-		<!-- <div class="col-auto px-2" *ngIf="filterUnit.isBooleanType">
-			<div class="form-check form-switch mt-2">
-				<input class="form-check-input" type="checkbox" (id)="'checkedSwitch' + i.toString()"
-					formControlName="checked">
-				<label class="form-check-label" [for]="'checkedSwitch' + i.toString()">{{ filterUnit.fieldCaption
-					}}</label>
-			</div>
-		</div> -->
+		<app-boolean-panel *ngIf="filterUnit.isBooleanType" [filterUnit]="filterUnit"
+			[identifier]="i"></app-boolean-panel>
+		<!-- base panel class, close popover -->
 	</div>
 </div>
