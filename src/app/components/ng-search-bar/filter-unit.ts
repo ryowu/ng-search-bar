@@ -19,6 +19,7 @@ export class FilterUnit {
 	private currentChipButtonClass = '';
 
 	public autoEmitChange = false;
+	public closePopoverAfterFilterApplied = false;
 	public $actionSource: Subject<boolean> = new Subject<boolean>();
 	//#endregion
 

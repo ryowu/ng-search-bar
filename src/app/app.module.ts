@@ -8,12 +8,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgSearchBarComponent } from './components/ng-search-bar/container/ng-search-bar.component';
-import { DataAreaComponent } from './pages/data-area/data-area.component';
-import { HomeComponent } from './pages/home/home.component';
+import { BooleanPanelComponent } from './components/ng-search-bar/panels/boolean-panel/boolean-panel.component';
+import { NumberPanelComponent } from './components/ng-search-bar/panels/number-panel/number-panel.component';
 import { PopoverPanelComponent } from './components/ng-search-bar/panels/popover-panel/popover-panel.component';
 import { TextPanelComponent } from './components/ng-search-bar/panels/text-panel/text-panel.component';
-import { NumberPanelComponent } from './components/ng-search-bar/panels/number-panel/number-panel.component';
-import { BooleanPanelComponent } from './components/ng-search-bar/panels/boolean-panel/boolean-panel.component';
+import { DataAreaComponent } from './pages/data-area/data-area.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
 	declarations: [

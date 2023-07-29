@@ -63,6 +63,8 @@ export class SearchBarHelper {
 		this._filterUnits = this._config.fields.map((f) => {
 			const unit = new FilterUnit();
 			unit.filterField = f;
+			unit.closePopoverAfterFilterApplied =
+				this._config.closePopoverAfterFilterApply || true;
 			unit.autoEmitChange = this._config.autoRefresh || false;
 			return unit;
 		});
